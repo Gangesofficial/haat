@@ -52,6 +52,7 @@ function AppShell() {
 
   return (
     <>
+      <div className="ambient-canvas" aria-hidden="true" />
       <ScrollToTop />
       <LoadingBar />
       {!hideChrome && <Nav />}

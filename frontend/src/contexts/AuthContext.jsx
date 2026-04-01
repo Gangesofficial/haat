@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useEffect, useCallback } from 'rea
 import { supabase } from '../lib/supabase'
 
 const AuthContext = createContext(null)
+const AUTH_NOT_CONFIGURED = 'Auth is not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in frontend/.env.'
 
 // ── Normalise Supabase user → app user shape ──────────────────────────────────
 function normaliseUser(supabaseUser) {
@@ -22,6 +23,12 @@ export function AuthProvider({ children }) {
 
   // ── Sync with Supabase session on mount + auth state changes ─────────────
   useEffect(() => {
+    if (!supabase?.auth) {
+      setUser(null)
+      setLoading(false)
+      return
+    }
+
     // Get current session immediately
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(normaliseUser(session?.user ?? null))
@@ -38,12 +45,14 @@ export function AuthProvider({ children }) {
 
   // ── Get the current Supabase access token (for API calls) ─────────────────
   const token = useCallback(async () => {
+    if (!supabase?.auth) return null
     const { data: { session } } = await supabase.auth.getSession()
     return session?.access_token ?? null
   }, [])
 
   // ── register (email + password) ───────────────────────────────────────────
   const register = useCallback(async ({ email, password, name }) => {
+    if (!supabase?.auth) throw new Error(AUTH_NOT_CONFIGURED)
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -55,6 +64,7 @@ export function AuthProvider({ children }) {
 
   // ── login (email + password) ──────────────────────────────────────────────
   const login = useCallback(async ({ email, password }) => {
+    if (!supabase?.auth) throw new Error(AUTH_NOT_CONFIGURED)
     const { data, error } = await supabase.auth.signInWithPassword({ email, password })
     if (error) throw new Error(error.message)
     return normaliseUser(data.user)
@@ -62,6 +72,7 @@ export function AuthProvider({ children }) {
 
   // ── loginWithGoogle ───────────────────────────────────────────────────────
   const loginWithGoogle = useCallback(async () => {
+    if (!supabase?.auth) throw new Error(AUTH_NOT_CONFIGURED)
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
@@ -74,12 +85,17 @@ export function AuthProvider({ children }) {
 
   // ── logout ────────────────────────────────────────────────────────────────
   const logout = useCallback(async () => {
+    if (!supabase?.auth) {
+      setUser(null)
+      return
+    }
     await supabase.auth.signOut()
     setUser(null)
   }, [])
 
   // ── updateProfile ─────────────────────────────────────────────────────────
   const updateProfile = useCallback(async (updates) => {
+    if (!supabase?.auth) throw new Error(AUTH_NOT_CONFIGURED)
     const { data, error } = await supabase.auth.updateUser({ data: updates })
     if (error) throw new Error(error.message)
     const updated = normaliseUser(data.user)

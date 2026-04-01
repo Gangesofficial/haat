@@ -13,14 +13,14 @@ const EXAMPLE_PROMPTS = [
 ]
 
 const CATEGORIES = [
-  { slug: 'sweets',      label: 'Sweets & Mithai', icon: '🍬', count: '16',  img: '1558961363-fa8fdf82db35' },
-  { slug: 'sarees',      label: 'Sarees',           icon: '🥻', count: '12',  img: '1583208770927-29f97ae41ad1' },
-  { slug: 'clothing',    label: 'Clothing',          icon: '👘', count: '14',  img: '1583391733981-8498408ee4b6' },
-  { slug: 'spices',      label: 'Spices',            icon: '🌶️', count: '13',  img: '1596040033229-a9821ebd058d' },
-  { slug: 'handicrafts', label: 'Handicrafts',       icon: '🏺', count: '25',  img: '1594736797933-d0501ba2fe65' },
-  { slug: 'dry-fruits',  label: 'Dry Fruits',        icon: '🥜', count: '5',   img: '1631209121750-a9f656d28f25' },
-  { slug: 'tea',         label: 'Tea',               icon: '🍵', count: '5',   img: '1556679343-c7306c1976bc' },
-  { slug: 'jewellery',   label: 'Jewellery',         icon: '💍', count: '5',   img: '1535632066927-ab7c9ab60908' },
+  { slug: 'sweets',      label: 'Sweets & Mithai', icon: '🍬', count: '16', image: 'https://source.unsplash.com/900x1200/?indian,sweets,mithai&sig=11' },
+  { slug: 'sarees',      label: 'Sarees',          icon: '🥻', count: '12', image: 'https://source.unsplash.com/900x1200/?indian,saree,handloom&sig=12' },
+  { slug: 'clothing',    label: 'Clothing',        icon: '👘', count: '14', image: 'https://source.unsplash.com/900x1200/?indian,fashion,ethnic-wear&sig=13' },
+  { slug: 'spices',      label: 'Spices',          icon: '🌶️', count: '13', image: 'https://source.unsplash.com/900x1200/?indian,spices,masala&sig=14' },
+  { slug: 'handicrafts', label: 'Handicrafts',     icon: '🏺', count: '25', image: 'https://source.unsplash.com/900x1200/?indian,handicraft,artisan&sig=15' },
+  { slug: 'dry-fruits',  label: 'Dry Fruits',      icon: '🥜', count: '5',  image: 'https://source.unsplash.com/900x1200/?dry-fruits,nuts,market&sig=16' },
+  { slug: 'tea',         label: 'Tea',             icon: '🍵', count: '5',  image: 'https://source.unsplash.com/900x1200/?indian,tea,darjeeling&sig=17' },
+  { slug: 'jewellery',   label: 'Jewellery',       icon: '💍', count: '5',  image: 'https://source.unsplash.com/900x1200/?indian,jewellery,gold&sig=18' },
 ]
 
 const STATS = [
@@ -35,27 +35,101 @@ const CONVERSATIONS = [
     query: 'Diwali gift for my mother in London under ₹3,000',
     reply: 'Found 6 mithai hampers from Chandni Chowk and Mumbai — I\'d suggest the Kaju Katli & Mysore Pak box from Sri Mythri Sweets. Ships to UK in 8 days.',
     products: [
-      { name: 'Kaju Katli Box', price: '₹680', img: '1558961363-fa8fdf82db35' },
-      { name: 'Mysore Pak',     price: '₹420', img: '1606914469633-bd59cf36e82a' },
+      { name: 'Kaju Katli Box', price: '₹680', image: 'https://source.unsplash.com/120x120/?indian,sweets,kaju-katli&sig=31' },
+      { name: 'Mysore Pak',     price: '₹420', image: 'https://source.unsplash.com/120x120/?mysore-pak,indian-dessert&sig=32' },
     ],
   },
   {
     query: 'Authentic Kanjivaram saree for a wedding — budget ₹8,000',
     reply: 'Showing 4 genuine Kanjivaram sarees from Kanchipuram weavers. The gold zari Peacock motif at ₹8,500 is outstanding — slightly over budget but worth it.',
     products: [
-      { name: 'Kanjivaram Silk',  price: '₹8,500', img: '1583208770927-29f97ae41ad1' },
-      { name: 'Banarasi Tissue',  price: '₹6,200', img: '1551488831-00ddcb6c6bd3' },
+      { name: 'Kanjivaram Silk',  price: '₹8,500', image: 'https://source.unsplash.com/120x120/?kanjivaram,saree,indian&sig=33' },
+      { name: 'Banarasi Tissue',  price: '₹6,200', image: 'https://source.unsplash.com/120x120/?banarasi,saree,fabric&sig=34' },
     ],
   },
   {
     query: 'Best Darjeeling first flush tea as a corporate gift',
     reply: 'Margaret\'s Hope estate first flush — muscatel notes, gorgeous golden liquor. Comes in a gift-ready wooden box. Classic choice that always impresses.',
     products: [
-      { name: 'Darjeeling FTGFOP1', price: '₹680', img: '1556679343-c7306c1976bc' },
-      { name: 'Kashmiri Kahwa',      price: '₹450', img: '1548013146-72479768bada' },
+      { name: 'Darjeeling FTGFOP1', price: '₹680', image: 'https://source.unsplash.com/120x120/?darjeeling,tea,leaves&sig=35' },
+      { name: 'Kashmiri Kahwa',      price: '₹450', image: 'https://source.unsplash.com/120x120/?kahwa,tea,spices&sig=36' },
     ],
   },
 ]
+
+const HERO_GALLERY = [
+  {
+    id: 'hero-1',
+    src: 'https://source.unsplash.com/900x1200/?indian,sweets,market&sig=51',
+    top: '16%',
+    left: '6%',
+    delay: '120ms',
+    rotate: '-8deg',
+  },
+  {
+    id: 'hero-2',
+    src: 'https://source.unsplash.com/900x1200/?indian,saree,textiles&sig=52',
+    top: '20%',
+    right: '6%',
+    delay: '220ms',
+    rotate: '7deg',
+  },
+  {
+    id: 'hero-3',
+    src: 'https://source.unsplash.com/900x1200/?indian,spices,market&sig=53',
+    bottom: '12%',
+    left: '12%',
+    delay: '300ms',
+    rotate: '6deg',
+  },
+  {
+    id: 'hero-4',
+    src: 'https://source.unsplash.com/900x1200/?indian,handicrafts,artisan&sig=54',
+    bottom: '10%',
+    right: '12%',
+    delay: '380ms',
+    rotate: '-7deg',
+  },
+]
+
+const MOBILE_HERO_STRIP = [
+  'https://source.unsplash.com/900x1200/?indian,sweets,mithai&sig=61',
+  'https://source.unsplash.com/900x1200/?indian,saree,fabric&sig=62',
+  'https://source.unsplash.com/900x1200/?indian,spices,masala&sig=63',
+]
+
+const TRUST_BADGES = [
+  'Authentic sellers from India',
+  'Secure checkout & tracking',
+  'Doorstep delivery worldwide',
+  'Voice + chat shopping assistant',
+  'Festival curation by AI',
+]
+
+const TESTIMONIALS = [
+  {
+    quote: 'I found my nani\'s exact mango pickle brand in under a minute. It felt like shopping in Delhi again.',
+    name: 'Priya S.',
+    city: 'Toronto',
+    photo: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=240&q=80&auto=format&fit=crop',
+  },
+  {
+    quote: 'The AI suggested wedding sarees with context I did not even type. That was honestly magical.',
+    name: 'Ananya R.',
+    city: 'Dubai',
+    photo: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=240&q=80&auto=format&fit=crop',
+  },
+  {
+    quote: 'From tea gifts to dry fruits, everything arrived on time with clean tracking updates.',
+    name: 'Rohan K.',
+    city: 'London',
+    photo: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=240&q=80&auto=format&fit=crop',
+  },
+]
+
+function fallbackPhoto(seed, width = 900, height = 1200) {
+  return `https://picsum.photos/seed/${encodeURIComponent(seed)}/${width}/${height}`
+}
 
 // ── Animated counter ───────────────────────────────────────────────────────────
 function useCountUp(target, duration = 1200, isFloat = false) {
@@ -115,6 +189,9 @@ function StatItem({ stat, isLast }) {
 // ── Category card ──────────────────────────────────────────────────────────────
 function CategoryCard({ cat, onClick }) {
   const [hovered, setHovered] = useState(false)
+  const backup = fallbackPhoto(`cat-${cat.slug}`)
+  const [imgSrc, setImgSrc] = useState(cat.image)
+  const [imgFailed, setImgFailed] = useState(false)
   return (
     <div
       onClick={() => onClick(cat.slug)}
@@ -129,15 +206,39 @@ function CategoryCard({ cat, onClick }) {
         transition: 'all 220ms var(--ease-default)',
       }}
     >
-      <img
-        src={`https://images.unsplash.com/photo-${cat.img}?w=600&q=80`}
-        alt={cat.label} loading="lazy"
-        style={{
-          position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover',
-          opacity: 0.45, transform: hovered ? 'scale(1.06)' : 'scale(1)',
-          transition: 'transform 400ms var(--ease-smooth)',
-        }}
-      />
+      {!imgFailed && (
+        <img
+          src={imgSrc}
+          alt=""
+          loading="lazy"
+          onError={() => {
+            if (imgSrc !== backup) {
+              setImgSrc(backup)
+              return
+            }
+            setImgFailed(true)
+          }}
+          style={{
+            position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover',
+            opacity: 0.45, transform: hovered ? 'scale(1.06)' : 'scale(1)',
+            transition: 'transform 400ms var(--ease-smooth)',
+          }}
+        />
+      )}
+      {imgFailed && (
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'radial-gradient(120% 120% at 0% 0%, rgba(249,115,22,0.35) 0%, rgba(17,17,17,0.92) 60%)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: '36px',
+          filter: 'saturate(1.2)',
+        }}>
+          {cat.icon}
+        </div>
+      )}
       <div style={{
         position: 'absolute', inset: 0,
         background: 'linear-gradient(to top, rgba(4,4,4,0.92) 0%, rgba(4,4,4,0.35) 60%, transparent 100%)',
@@ -162,7 +263,7 @@ function CategoryCard({ cat, onClick }) {
 // ── Conversation preview card ──────────────────────────────────────────────────
 function ConvoCard({ convo, delay }) {
   return (
-    <div style={{
+    <div className="fx-soft-card" style={{
       background: 'var(--bg-raised)', border: '1px solid var(--border-subtle)',
       borderRadius: 'var(--radius-2xl)', padding: '20px', display: 'flex', flexDirection: 'column', gap: '16px',
       animation: `fadeUp 500ms var(--ease-out) ${delay}ms both`,
@@ -205,10 +306,38 @@ function ConvoCard({ convo, delay }) {
                 borderRadius: 'var(--radius-md)', padding: '6px 10px',
               }}>
                 <img
-                  src={`https://images.unsplash.com/photo-${p.img}?w=48&q=70`}
-                  alt={p.name}
+                  src={p.image}
+                  alt=""
+                  loading="lazy"
+                  onError={e => {
+                    if (e.currentTarget.dataset.fbApplied === '1') {
+                      e.currentTarget.style.display = 'none'
+                      const fallback = e.currentTarget.nextElementSibling
+                      if (fallback) fallback.style.display = 'inline-flex'
+                      return
+                    }
+                    e.currentTarget.dataset.fbApplied = '1'
+                    e.currentTarget.src = fallbackPhoto(`chip-${p.name}`, 120, 120)
+                  }}
                   style={{ width: '28px', height: '28px', borderRadius: '6px', objectFit: 'cover', flexShrink: 0 }}
                 />
+                <span
+                  style={{
+                    width: '28px',
+                    height: '28px',
+                    borderRadius: '6px',
+                    background: 'linear-gradient(135deg, rgba(249,115,22,0.35) 0%, rgba(217,119,6,0.25) 100%)',
+                    color: 'var(--text-primary)',
+                    display: 'none',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '12px',
+                    fontWeight: 700,
+                    flexShrink: 0,
+                  }}
+                >
+                  {p.name[0]}
+                </span>
                 <div>
                   <p style={{ margin: 0, fontSize: '11px', fontWeight: 600, color: 'var(--text-primary)', whiteSpace: 'nowrap' }}>{p.name}</p>
                   <p style={{ margin: 0, fontSize: '10px', color: 'var(--brand-saffron)', fontWeight: 600 }}>{p.price}</p>
@@ -288,6 +417,48 @@ export default function HomePage() {
           background: 'radial-gradient(ellipse 60% 50% at 50% 0%, rgba(249,115,22,0.10) 0%, transparent 70%)',
         }} />
 
+        {/* Floating gallery cards */}
+        <div className="hero-gallery" aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 1, pointerEvents: 'none' }}>
+          {HERO_GALLERY.map(item => (
+            <div
+              key={item.id}
+              style={{
+                position: 'absolute',
+                top: item.top,
+                right: item.right,
+                bottom: item.bottom,
+                left: item.left,
+                '--rot': item.rotate,
+                width: '220px',
+                aspectRatio: '4/5',
+                borderRadius: '16px',
+                overflow: 'hidden',
+                border: '1px solid rgba(255,255,255,0.22)',
+                background: 'rgba(255,255,255,0.05)',
+                boxShadow: '0 20px 45px rgba(0,0,0,0.35), 0 0 0 1px rgba(249,115,22,0.14)',
+                transform: 'rotate(var(--rot))',
+                animation: `heroCardIn 700ms var(--ease-out) ${item.delay} both, heroFloat 9s ease-in-out ${item.delay} infinite`,
+              }}
+            >
+              <img
+                src={item.src}
+                alt=""
+                loading="lazy"
+                onError={e => {
+                  if (e.currentTarget.dataset.fbApplied === '1') {
+                    e.currentTarget.style.display = 'none'
+                    return
+                  }
+                  e.currentTarget.dataset.fbApplied = '1'
+                  e.currentTarget.src = fallbackPhoto(`hero-${item.id}`)
+                }}
+                style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.95 }}
+              />
+              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(6,6,6,0.55) 0%, rgba(6,6,6,0.08) 55%, rgba(6,6,6,0) 100%)' }} />
+            </div>
+          ))}
+        </div>
+
         {/* Content */}
         <div style={{
           position: 'relative', zIndex: 2, flex: 1,
@@ -335,6 +506,7 @@ export default function HomePage() {
           <div style={{ marginTop: '36px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px', width: '100%', animation: 'fadeUp 500ms var(--ease-out) 240ms both' }}>
             <Link
               to="/chat"
+              className="fx-glow-button"
               style={{
                 display: 'inline-flex', alignItems: 'center', gap: '10px',
                 background: 'var(--brand-saffron)',
@@ -370,6 +542,42 @@ export default function HomePage() {
                 </button>
               ))}
             </div>
+
+            <div className="hero-mobile-gallery" style={{
+              width: '100%',
+              marginTop: '22px',
+              display: 'none',
+              gridTemplateColumns: '1.1fr 1fr 0.9fr',
+              gap: '8px',
+            }}>
+              {MOBILE_HERO_STRIP.map((src, i) => (
+                <div
+                  key={src}
+                  style={{
+                    height: i === 1 ? '88px' : '76px',
+                    borderRadius: '14px',
+                    overflow: 'hidden',
+                    border: '1px solid rgba(255,255,255,0.18)',
+                    boxShadow: '0 10px 22px rgba(0,0,0,0.28)',
+                  }}
+                >
+                  <img
+                    src={src}
+                    alt=""
+                    loading="lazy"
+                    onError={e => {
+                      if (e.currentTarget.dataset.fbApplied === '1') {
+                        e.currentTarget.style.display = 'none'
+                        return
+                      }
+                      e.currentTarget.dataset.fbApplied = '1'
+                      e.currentTarget.src = fallbackPhoto(`hero-mobile-${i}`)
+                    }}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -387,6 +595,40 @@ export default function HomePage() {
               <StatItem stat={stat} isLast={i === STATS.length - 1} />
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* ══ SECTION 2.5 — TRUST MARQUEE ═══════════════════════════════════════ */}
+      <section style={{ borderBottom: '1px solid var(--border-faint)', background: 'var(--bg-base)' }}>
+        <div style={{ overflow: 'hidden', position: 'relative' }}>
+          <div className="trust-marquee" style={{
+            display: 'flex',
+            gap: '12px',
+            width: 'max-content',
+            padding: '12px 0',
+            animation: 'trustSlide 26s linear infinite',
+          }}>
+            {[...TRUST_BADGES, ...TRUST_BADGES].map((item, idx) => (
+              <span
+                key={`${item}-${idx}`}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  padding: '8px 14px',
+                  borderRadius: '999px',
+                  border: '1px solid var(--border-subtle)',
+                  background: 'rgba(255,255,255,0.03)',
+                  fontSize: '12px',
+                  color: 'var(--text-secondary)',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                <span style={{ color: 'var(--brand-saffron)' }}>●</span>
+                {item}
+              </span>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -408,7 +650,7 @@ export default function HomePage() {
 
           <div ref={convoRef} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '16px' }}>
             {CONVERSATIONS.map((c, i) => (
-              <div key={i} className="reveal-child">
+              <div key={i} className="reveal-child fx-soft-card">
                 <ConvoCard convo={c} delay={i * 80} />
               </div>
             ))}
@@ -448,7 +690,7 @@ export default function HomePage() {
           </div>
           <div ref={catsRef} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '12px' }}>
             {CATEGORIES.map((cat, i) => (
-              <div key={cat.slug} className="reveal-child">
+              <div key={cat.slug} className="reveal-child fx-soft-card">
                 <CategoryCard cat={cat} onClick={slug => navigate(`/search?category=${slug}`)} />
               </div>
             ))}
@@ -460,9 +702,44 @@ export default function HomePage() {
       <section style={{ padding: 'var(--space-16) 0' }}>
         <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 var(--space-6)' }}>
           <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 'var(--space-8)', flexWrap: 'wrap', gap: '12px' }}>
-            <div>
-              <p style={{ fontSize: '11px', fontWeight: 600, letterSpacing: '0.10em', color: 'var(--brand-saffron)', marginBottom: '8px', textTransform: 'uppercase' }}>TRENDING NOW</p>
-              <h2 style={{ fontSize: 'clamp(24px, 3.5vw, 32px)', fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--text-primary)', margin: 0 }}>Handpicked by AI.</h2>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+              <span style={{
+                display: 'inline-flex', alignItems: 'center', gap: '7px',
+                background: 'linear-gradient(90deg, rgba(249,115,22,0.13) 0%, rgba(251,191,36,0.10) 100%)',
+                border: '1px solid var(--brand-saffron-lt)',
+                borderRadius: '999px',
+                padding: '4px 14px 4px 10px',
+                fontSize: '11px', fontWeight: 700, letterSpacing: '0.10em',
+                color: 'var(--brand-saffron)', textTransform: 'uppercase',
+                boxShadow: '0 2px 12px 0 rgba(249,115,22,0.10)',
+                marginBottom: '7px',
+                animation: 'fadeUp 500ms var(--ease-out) 0ms both',
+              }}>
+                <svg width="14" height="14" viewBox="0 0 20 20" fill="none" style={{ filter: 'drop-shadow(0 0 6px #F97316)' }}>
+                  <circle cx="10" cy="10" r="8.5" fill="#fff8f1" stroke="#F97316" strokeWidth="2" />
+                  <path d="M10 6v8M6 10h8" stroke="#F97316" strokeWidth="2" strokeLinecap="round"/>
+                </svg>
+                TRENDING NOW
+              </span>
+              <span style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <span style={{ fontSize: 'clamp(24px, 3.5vw, 32px)', fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--text-primary)', margin: 0, display: 'inline-flex', alignItems: 'center' }}>
+                  Handpicked by AI.
+                  <span style={{
+                    marginLeft: '7px',
+                    display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                    width: '22px', height: '22px', borderRadius: '50%',
+                    background: 'linear-gradient(135deg, #fffbe8 0%, #fbe7c6 100%)',
+                    boxShadow: '0 0 0 2px #F97316, 0 0 12px 0 #F9731644',
+                    position: 'relative',
+                    animation: 'pulseGlow 1.8s infinite alternate',
+                  }}>
+                    <svg width="14" height="14" viewBox="0 0 20 20" fill="none">
+                      <circle cx="10" cy="10" r="7.5" fill="#fff" stroke="#F97316" strokeWidth="2" />
+                      <path d="M10 6v8M6 10h8" stroke="#F97316" strokeWidth="2" strokeLinecap="round"/>
+                    </svg>
+                  </span>
+                </span>
+              </span>
             </div>
             <Link to="/search?q=featured" style={{ fontSize: '13px', fontWeight: 500, color: 'var(--text-tertiary)', textDecoration: 'none', transition: 'color 140ms ease' }}
               onMouseEnter={e => e.currentTarget.style.color = 'var(--text-primary)'}
@@ -471,6 +748,13 @@ export default function HomePage() {
               View all →
             </Link>
           </div>
+                {/* Add pulseGlow keyframes for the glowing icon */}
+                <style>{`
+                  @keyframes pulseGlow {
+                    0% { box-shadow: 0 0 0 2px #F97316, 0 0 12px 0 #F9731644; }
+                    100% { box-shadow: 0 0 0 4px #F97316, 0 0 24px 4px #F9731688; }
+                  }
+                `}</style>
           <div ref={featuredRef} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '14px' }}>
             {loading
               ? Array.from({ length: 8 }, (_, i) => <SkeletonCard key={i} />)
@@ -554,6 +838,53 @@ export default function HomePage() {
       </section>
 
       {/* ══ SECTION 7 — CLOSING CTA ═══════════════════════════════════════════ */}
+      <section style={{ padding: 'var(--space-16) 0', borderTop: '1px solid var(--border-faint)', background: 'linear-gradient(180deg, var(--bg-base) 0%, rgba(17,17,17,1) 100%)' }}>
+        <div style={{ maxWidth: '1120px', margin: '0 auto', padding: '0 var(--space-6)' }}>
+          <div style={{ textAlign: 'center', marginBottom: 'var(--space-8)' }}>
+            <p style={{ fontSize: '11px', fontWeight: 600, letterSpacing: '0.10em', color: 'var(--brand-saffron)', marginBottom: '8px', textTransform: 'uppercase' }}>REAL PEOPLE, REAL ORDERS</p>
+            <h2 style={{ fontSize: 'clamp(24px, 3.5vw, 34px)', fontWeight: 700, letterSpacing: '-0.02em', margin: 0 }}>
+              Loved by diaspora families worldwide.
+            </h2>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '14px' }}>
+            {TESTIMONIALS.map((item, i) => (
+              <article
+                key={item.name}
+                className="reveal-child"
+                style={{
+                  borderRadius: '16px',
+                  border: '1px solid var(--border-subtle)',
+                  background: 'linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%)',
+                  padding: '18px',
+                  animation: `fadeUp 500ms var(--ease-out) ${i * 80}ms both`,
+                }}
+              >
+                <p style={{ fontSize: '14px', color: 'var(--text-secondary)', lineHeight: 1.65, margin: '0 0 16px' }}>
+                  "{item.quote}"
+                </p>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <img
+                    src={item.photo}
+                    alt={item.name}
+                    loading="lazy"
+                    onError={e => {
+                      if (e.currentTarget.dataset.fbApplied === '1') return
+                      e.currentTarget.dataset.fbApplied = '1'
+                      e.currentTarget.src = fallbackPhoto(`person-${item.name}`, 120, 120)
+                    }}
+                    style={{ width: '34px', height: '34px', borderRadius: '50%', objectFit: 'cover', border: '1px solid rgba(255,255,255,0.28)' }}
+                  />
+                  <div>
+                    <p style={{ margin: 0, fontSize: '13px', fontWeight: 600, color: 'var(--text-primary)' }}>{item.name}</p>
+                    <p style={{ margin: 0, fontSize: '12px', color: 'var(--text-tertiary)' }}>{item.city}</p>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section style={{ position: 'relative', overflow: 'hidden', padding: 'var(--space-24) var(--space-6)', textAlign: 'center' }}>
         <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', overflow: 'hidden' }}>
           <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', width: '600px', height: '400px', borderRadius: '50%', background: 'radial-gradient(ellipse, rgba(249,115,22,0.07) 0%, transparent 70%)', filter: 'blur(80px)' }} />
@@ -567,6 +898,7 @@ export default function HomePage() {
           </p>
           <Link
             to="/chat"
+            className="fx-glow-button"
             style={{
               display: 'inline-flex', alignItems: 'center', gap: '10px',
               background: 'var(--brand-saffron)', color: '#fff', textDecoration: 'none',
@@ -592,8 +924,43 @@ export default function HomePage() {
           from { opacity: 0; transform: translateY(14px); }
           to   { opacity: 1; transform: translateY(0); }
         }
+        @keyframes heroFloat {
+          0%, 100% { transform: translateY(0) rotate(var(--rot, 0deg)); }
+          50%      { transform: translateY(-12px) rotate(var(--rot, 0deg)); }
+        }
+        @keyframes heroCardIn {
+          from { opacity: 0; transform: translateY(20px) scale(0.95) rotate(var(--rot, 0deg)); }
+          to   { opacity: 1; transform: translateY(0) scale(1) rotate(var(--rot, 0deg)); }
+        }
+        @keyframes trustSlide {
+          0%   { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .hero-gallery > div:nth-child(2),
+        .hero-gallery > div:nth-child(4) {
+          animation-duration: 10.5s;
+        }
+        .hero-gallery > div:nth-child(3) {
+          animation-duration: 8.5s;
+        }
+        @media (max-width: 1080px) {
+          .hero-gallery > div {
+            width: 170px !important;
+            opacity: 0.78;
+          }
+        }
         @media (max-width: 640px) {
+          .trust-marquee {
+            animation-duration: 18s !important;
+          }
+          .hero-gallery { display: none !important; }
+          .hero-mobile-gallery { display: grid !important; }
           .stat-divider { border-right: none !important; border-bottom: 1px solid var(--border-faint); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .hero-gallery > div {
+            animation: none !important;
+          }
         }
       `}</style>
     </>

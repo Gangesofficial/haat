@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useCart } from '../contexts/CartContext'
 import { useAuth } from '../contexts/AuthContext'
 import { useTheme } from '../contexts/ThemeContext'
+import BrandMark from './BrandMark'
 
 const NAV_LINKS = [
   { label: 'Markets',  path: '/markets' },
@@ -22,7 +23,7 @@ function useScrollY() {
 export default function Nav() {
   const { count } = useCart()
   const { user, logout } = useAuth()
-  const { theme, setTheme } = useTheme()
+  const { theme, resolvedTheme, setTheme } = useTheme()
   const location   = useLocation()
   const navigate   = useNavigate()
   const scrollY    = useScrollY()
@@ -32,6 +33,7 @@ export default function Nav() {
   const [avatarOpen, setAvatarOpen] = useState(false)
   const searchRef = useRef(null)
   const avatarRef = useRef(null)
+  const isLight = resolvedTheme === 'light'
 
   const scrolled = scrollY > 8
 
@@ -118,70 +120,95 @@ export default function Nav() {
   return (
     <>
       <nav
+        className="main-nav"
         style={{
           position: 'fixed',
           top: 0,
           left: 0,
           right: 0,
           zIndex: 100,
-          height: '60px',
+          height: '64px',
           display: 'flex',
           alignItems: 'center',
-          padding: '0 24px',
-          background: scrolled
-            ? 'rgba(8,8,8,0.88)'
-            : 'rgba(8,8,8,0.60)',
+          padding: '0 20px',
+          background: isLight
+            ? (scrolled
+              ? 'linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(245,246,249,0.92) 100%)'
+              : 'linear-gradient(180deg, rgba(255,255,255,0.86) 0%, rgba(245,246,249,0.74) 100%)')
+            : (scrolled
+              ? 'linear-gradient(180deg, rgba(12,14,18,0.95) 0%, rgba(16,20,29,0.88) 100%)'
+              : 'linear-gradient(180deg, rgba(12,14,18,0.80) 0%, rgba(16,20,29,0.62) 100%)'),
           backdropFilter: 'blur(20px)',
           WebkitBackdropFilter: 'blur(20px)',
           borderBottom: scrolled
-            ? '1px solid rgba(255,255,255,0.06)'
+            ? (isLight ? '1px solid rgba(0,0,0,0.10)' : '1px solid rgba(255,255,255,0.08)')
             : '1px solid transparent',
-          transition: 'background 0.25s ease, border-color 0.25s ease',
+          boxShadow: scrolled
+            ? (isLight ? '0 8px 24px rgba(0,0,0,0.08)' : '0 10px 30px rgba(0,0,0,0.25)')
+            : 'none',
+          transition: 'background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease',
         }}
       >
-        {/* ── LEFT: Wordmark ─────────────────────────── */}
-        <Link
-          to="/"
-          style={{
-            textDecoration: 'none',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '10px',
-            flexShrink: 0,
-          }}
-        >
-          {/* Geometric mark — 2×2 grid, descending opacity */}
-          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
-            <rect x="0"  y="0"  width="10" height="10" rx="2" fill="rgba(255,255,255,1)"    />
-            <rect x="12" y="0"  width="10" height="10" rx="2" fill="rgba(255,255,255,0.55)" />
-            <rect x="0"  y="12" width="10" height="10" rx="2" fill="rgba(255,255,255,0.35)" />
-            <rect x="12" y="12" width="10" height="10" rx="2" fill="rgba(255,255,255,0.18)" />
-          </svg>
-          <span
-            style={{
-              fontFamily: '"Inter", sans-serif',
-              fontSize: '18px',
-              fontWeight: 700,
-              color: '#ffffff',
-              letterSpacing: '-0.03em',
-              lineHeight: 1,
-            }}
-          >
-            haat.
-          </span>
-        </Link>
-
-        {/* ── CENTER: Nav links (desktop only) ─────── */}
         <div
+          aria-hidden="true"
           style={{
             position: 'absolute',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            display: 'flex',
-            gap: '4px',
+            left: 0,
+            right: 0,
+            top: 0,
+            height: '1px',
+            background: isLight
+              ? 'linear-gradient(90deg, transparent 0%, rgba(249,115,22,0.40) 45%, rgba(217,119,6,0.34) 55%, transparent 100%)'
+              : 'linear-gradient(90deg, transparent 0%, rgba(249,115,22,0.55) 45%, rgba(217,119,6,0.45) 55%, transparent 100%)',
+            opacity: scrolled ? 0.9 : 0.55,
+            pointerEvents: 'none',
           }}
-          className="nav-center-links"
-        >
+        />
+
+        <div className="nav-inner" style={{ width: '100%', maxWidth: '1320px', margin: '0 auto', display: 'flex', alignItems: 'center', position: 'relative' }}>
+          {/* ── LEFT: Wordmark ─────────────────────────── */}
+          <Link
+            to="/"
+            className="nav-brand"
+            style={{
+              textDecoration: 'none',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+              flexShrink: 0,
+            }}
+          >
+            <BrandMark size="md" light />
+            <span className="nav-brand-tag" style={{
+              fontSize: '10px',
+              letterSpacing: '0.09em',
+              textTransform: 'uppercase',
+              color: isLight ? 'rgba(0,0,0,0.52)' : 'rgba(255,255,255,0.58)',
+              border: isLight ? '1px solid rgba(0,0,0,0.12)' : '1px solid rgba(255,255,255,0.14)',
+              borderRadius: '999px',
+              padding: '4px 8px',
+              background: isLight ? 'rgba(0,0,0,0.02)' : 'rgba(255,255,255,0.02)',
+            }}>
+              Indian Marketplace
+            </span>
+          </Link>
+
+        {/* ── CENTER: Nav links (desktop only) ─────── */}
+          <div
+            style={{
+              position: 'absolute',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              display: 'flex',
+              gap: '6px',
+              background: isLight ? 'rgba(0,0,0,0.03)' : 'rgba(255,255,255,0.03)',
+              border: isLight ? '1px solid rgba(0,0,0,0.10)' : '1px solid rgba(255,255,255,0.08)',
+              borderRadius: '999px',
+              padding: '4px',
+              boxShadow: isLight ? 'inset 0 1px 0 rgba(255,255,255,0.55)' : 'inset 0 1px 0 rgba(255,255,255,0.08)',
+            }}
+            className="nav-center-links"
+          >
           {NAV_LINKS.map(({ label, path }) => {
             const active = location.pathname === path
             return (
@@ -195,20 +222,24 @@ export default function Nav() {
                   fontWeight: active ? 600 : 400,
                   color: active ? 'var(--text-primary)' : 'var(--text-secondary)',
                   textDecoration: 'none',
-                  background: active ? 'rgba(255,255,255,0.06)' : 'transparent',
-                  transition: 'color 0.15s ease, background 0.15s ease',
+                  background: active
+                    ? (isLight ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.06)')
+                    : 'transparent',
+                  transition: 'color 0.15s ease, background 0.15s ease, transform 0.15s ease',
                   whiteSpace: 'nowrap',
                 }}
                 onMouseEnter={e => {
                   if (!active) {
                     e.currentTarget.style.color = 'var(--text-primary)'
                     e.currentTarget.style.background = 'rgba(255,255,255,0.04)'
+                    e.currentTarget.style.transform = 'translateY(-1px)'
                   }
                 }}
                 onMouseLeave={e => {
                   if (!active) {
                     e.currentTarget.style.color = 'var(--text-secondary)'
                     e.currentTarget.style.background = 'transparent'
+                    e.currentTarget.style.transform = 'translateY(0)'
                   }
                 }}
               >
@@ -216,12 +247,13 @@ export default function Nav() {
               </Link>
             )
           })}
-        </div>
+          </div>
 
         {/* ── RIGHT: Icons + CTA ───────────────────── */}
-        <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <div className="nav-right" style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '8px' }}>
           {/* Theme toggle */}
           <button
+            className="nav-icon-btn nav-theme-btn"
             onClick={cycleTheme}
             aria-label={`Switch theme (current: ${theme})`}
             title={`Theme: ${theme} — click to cycle`}
@@ -246,6 +278,7 @@ export default function Nav() {
 
           {/* Search icon */}
           <button
+            className="nav-icon-btn nav-search-btn"
             onClick={() => setSearchOpen(true)}
             aria-label="Open search"
             style={{
@@ -276,6 +309,7 @@ export default function Nav() {
           {/* Cart icon */}
           <Link
             to="/cart"
+            className="nav-icon-btn nav-cart-btn"
             data-cart-icon="true"
             aria-label={`Cart (${count} items)`}
             style={{
@@ -332,7 +366,7 @@ export default function Nav() {
           {/* Chat CTA — desktop only */}
           <Link
             to="/chat"
-            className="nav-cta"
+            className="nav-cta fx-glow-button"
             style={{
               padding: '7px 16px',
               borderRadius: '999px',
@@ -345,8 +379,8 @@ export default function Nav() {
               whiteSpace: 'nowrap',
               transition: 'background 0.15s ease, border-color 0.15s ease',
             }}
-            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(249,115,22,0.20)'; e.currentTarget.style.borderColor = 'rgba(249,115,22,0.40)' }}
-            onMouseLeave={e => { e.currentTarget.style.background = location.pathname === '/chat' ? 'rgba(249,115,22,0.15)' : 'rgba(249,115,22,0.10)'; e.currentTarget.style.borderColor = 'rgba(249,115,22,0.25)' }}
+            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(249,115,22,0.20)'; e.currentTarget.style.borderColor = 'rgba(249,115,22,0.40)'; e.currentTarget.style.transform = 'translateY(-1px)' }}
+            onMouseLeave={e => { e.currentTarget.style.background = location.pathname === '/chat' ? 'rgba(249,115,22,0.15)' : 'rgba(249,115,22,0.10)'; e.currentTarget.style.borderColor = 'rgba(249,115,22,0.25)'; e.currentTarget.style.transform = 'translateY(0)' }}
           >
             ✦ Chat
           </Link>
@@ -392,10 +426,10 @@ export default function Nav() {
                 <div style={{
                   position: 'absolute', top: 'calc(100% + 8px)', right: 0,
                   width: '200px',
-                  background: 'rgba(18,18,18,0.98)',
-                  border: '1px solid rgba(255,255,255,0.10)',
+                  background: isLight ? 'rgba(250,250,252,0.98)' : 'rgba(18,18,18,0.98)',
+                  border: isLight ? '1px solid rgba(0,0,0,0.10)' : '1px solid rgba(255,255,255,0.10)',
                   borderRadius: '12px',
-                  boxShadow: '0 16px 40px rgba(0,0,0,0.5)',
+                  boxShadow: isLight ? '0 14px 28px rgba(0,0,0,0.12)' : '0 16px 40px rgba(0,0,0,0.5)',
                   overflow: 'hidden',
                   animation: 'fadeUp 150ms ease both',
                 }}>
@@ -456,7 +490,7 @@ export default function Nav() {
               </Link>
               <Link
                 to="/signup"
-                className="nav-cta"
+                className="nav-cta fx-glow-button"
                 style={{
                   padding: '7px 16px',
                   borderRadius: '999px',
@@ -529,6 +563,7 @@ export default function Nav() {
               }}
             />
           </button>
+          </div>
         </div>
       </nav>
 
@@ -537,14 +572,14 @@ export default function Nav() {
         className="nav-mobile-menu"
         style={{
           position: 'fixed',
-          top: '60px',
+          top: '64px',
           left: 0,
           right: 0,
           zIndex: 99,
-          background: 'rgba(8,8,8,0.96)',
+          background: isLight ? 'rgba(247,248,252,0.97)' : 'rgba(14,17,24,0.96)',
           backdropFilter: 'blur(24px)',
           WebkitBackdropFilter: 'blur(24px)',
-          borderBottom: '1px solid rgba(255,255,255,0.06)',
+          borderBottom: isLight ? '1px solid rgba(0,0,0,0.10)' : '1px solid rgba(255,255,255,0.06)',
           padding: menuOpen ? '16px 24px 24px' : '0 24px',
           maxHeight: menuOpen ? '380px' : '0',
           overflow: 'hidden',
@@ -553,6 +588,10 @@ export default function Nav() {
         }}
       >
         <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '4px 6px 10px', borderBottom: '1px solid rgba(255,255,255,0.06)', marginBottom: '4px' }}>
+            <BrandMark size="sm" light />
+            <span style={{ fontSize: '11px', color: 'var(--text-tertiary)' }}>Menu</span>
+          </div>
           <Link
             to="/chat"
             style={{
@@ -603,6 +642,7 @@ export default function Nav() {
               </Link>
               <Link
                 to="/signup"
+                className="fx-glow-button"
                 style={{ marginTop: '8px', padding: '12px 16px', borderRadius: '999px', fontSize: '14px', fontWeight: 600, background: 'var(--brand-saffron)', color: '#fff', textDecoration: 'none', textAlign: 'center', display: 'block' }}
               >
                 Sign up
@@ -620,7 +660,7 @@ export default function Nav() {
             position: 'fixed',
             inset: 0,
             zIndex: 200,
-            background: 'rgba(0,0,0,0.7)',
+            background: isLight ? 'rgba(12,16,24,0.36)' : 'rgba(6,10,16,0.74)',
             backdropFilter: 'blur(8px)',
             display: 'flex',
             alignItems: 'flex-start',
@@ -633,11 +673,11 @@ export default function Nav() {
               width: '100%',
               maxWidth: '560px',
               margin: '0 16px',
-              background: 'rgba(20,20,20,0.98)',
-              border: '1px solid rgba(255,255,255,0.10)',
+              background: isLight ? 'rgba(255,255,255,0.98)' : 'rgba(18,22,32,0.98)',
+              border: isLight ? '1px solid rgba(0,0,0,0.10)' : '1px solid rgba(255,255,255,0.10)',
               borderRadius: '16px',
               overflow: 'hidden',
-              boxShadow: '0 24px 80px rgba(0,0,0,0.6)',
+              boxShadow: isLight ? '0 16px 42px rgba(0,0,0,0.18)' : '0 24px 80px rgba(0,0,0,0.6)',
             }}
           >
             <form onSubmit={handleSearchSubmit} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '16px 20px' }}>
@@ -687,10 +727,35 @@ export default function Nav() {
       {/* ── Responsive styles ────────────────────────── */}
       <style>{`
         @media (max-width: 768px) {
+          .main-nav {
+            height: 56px !important;
+            padding: 0 12px !important;
+          }
+          .nav-right {
+            gap: 3px !important;
+          }
+          .nav-icon-btn {
+            padding: 7px !important;
+          }
+          .nav-theme-btn {
+            display: none !important;
+          }
+          .nav-brand {
+            transform: scale(0.95);
+            transform-origin: left center;
+          }
+          .nav-brand-tag {
+            display: none !important;
+          }
           .nav-center-links { display: none !important; }
           .nav-cta          { display: none !important; }
           .nav-hamburger    { display: flex !important; }
-          .nav-mobile-menu  { display: block !important; }
+          .nav-mobile-menu  { display: block !important; top: 56px !important; }
+        }
+        @media (max-width: 980px) {
+          .nav-brand-tag {
+            display: none !important;
+          }
         }
       `}</style>
     </>

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useReveal } from '../hooks/useReveal'
+import BrandMark from './BrandMark'
 
 const SHOP_LINKS = [
   ['All Products',      '/search'],
@@ -131,6 +132,100 @@ export default function Footer() {
         ref={revealRef}
         style={{ maxWidth: 'var(--container-xl)', margin: '0 auto', padding: '0 var(--space-6)' }}
       >
+        <div className="footer-promo reveal-child" style={{
+          marginBottom: 'var(--space-12)',
+          borderRadius: 'var(--radius-2xl)',
+          border: '1px solid rgba(249,115,22,0.22)',
+          background: 'radial-gradient(120% 140% at 0% 0%, rgba(249,115,22,0.22) 0%, rgba(249,115,22,0.08) 35%, rgba(17,17,17,0.95) 85%)',
+          padding: '24px 24px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: '14px',
+        }}>
+          <div className="footer-promo-copy" style={{ maxWidth: '680px' }}>
+            <p className="fx-text-live" style={{ fontSize: '12px', letterSpacing: '0.11em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.58)', marginBottom: '8px' }}>
+              Crafted with people, not just pixels
+            </p>
+            <h3 style={{ fontSize: '24px', lineHeight: 1.25, letterSpacing: '-0.02em', margin: 0, color: '#fff' }}>
+              A warmer digital bazaar for families buying from home, anywhere in the world.
+            </h3>
+          </div>
+          <Link
+            className="footer-promo-cta fx-glow-button"
+            to="/chat"
+            style={{
+              padding: '10px 16px',
+              borderRadius: '999px',
+              fontSize: '13px',
+              fontWeight: 700,
+              color: '#fff',
+              background: 'linear-gradient(135deg, var(--brand-saffron) 0%, var(--brand-gold) 100%)',
+              textDecoration: 'none',
+              border: '1px solid rgba(255,255,255,0.18)',
+            }}
+          >
+            Talk to haat AI
+          </Link>
+        </div>
+
+        <div className="reveal-child" style={{
+          border: '1px solid var(--border-subtle)',
+          borderRadius: '14px',
+          padding: '16px',
+          background: 'linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%)',
+          marginBottom: 'var(--space-10)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          flexWrap: 'wrap',
+          gap: '10px',
+        }}>
+          <div>
+            <p style={{ margin: 0, fontSize: '13px', fontWeight: 600, color: 'var(--text-primary)' }}>
+              Get festival picks and new market drops
+            </p>
+            <p style={{ margin: '4px 0 0', fontSize: '12px', color: 'var(--text-tertiary)' }}>
+              Curated by AI, reviewed by real humans.
+            </p>
+          </div>
+          <div style={{ display: 'flex', gap: '8px', minWidth: 'min(420px, 100%)', flex: 1 }}>
+            <input
+              type="email"
+              placeholder="you@example.com"
+              aria-label="Email"
+              style={{
+                flex: 1,
+                minWidth: '150px',
+                background: 'var(--bg-overlay)',
+                border: '1px solid var(--border-subtle)',
+                borderRadius: '999px',
+                color: 'var(--text-primary)',
+                padding: '10px 14px',
+                fontSize: '13px',
+              }}
+            />
+            <button
+              type="button"
+              className="fx-glow-button"
+              style={{
+                border: '1px solid rgba(249,115,22,0.45)',
+                borderRadius: '999px',
+                background: 'linear-gradient(135deg, rgba(249,115,22,0.18) 0%, rgba(217,119,6,0.2) 100%)',
+                color: 'var(--brand-saffron-lt)',
+                fontSize: '13px',
+                fontWeight: 600,
+                padding: '10px 16px',
+                cursor: 'pointer',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              Notify me
+            </button>
+          </div>
+        </div>
+
         {/* ── Upper 4-col grid ───────── */}
         <div className="footer-grid reveal-child" style={{
           display: 'grid',
@@ -141,9 +236,7 @@ export default function Footer() {
           {/* Brand col */}
           <div>
             <Link to="/" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px', marginBottom: 'var(--space-4)' }}>
-              <span style={{ fontSize: '16px', fontWeight: 700, letterSpacing: '-0.03em', color: '#fff' }}>
-                haat.
-              </span>
+              <BrandMark size="sm" light />
             </Link>
             <p style={{ fontSize: '14px', color: 'var(--text-tertiary)', maxWidth: '220px', lineHeight: 1.65, margin: '0 0 var(--space-5)' }}>
               Connecting the Indian diaspora to authentic local markets.
@@ -182,7 +275,7 @@ export default function Footer() {
         </div>
 
         {/* ── Lower bar ──────────────── */}
-        <div className="reveal-child" style={{
+        <div className="footer-lower reveal-child" style={{
           borderTop: '1px solid var(--border-faint)',
           paddingTop: 'var(--space-6)',
           paddingBottom: 'var(--space-8)',
@@ -202,6 +295,31 @@ export default function Footer() {
       </div>
 
       <style>{`
+        @media (max-width: 1100px) {
+          .footer-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+        @media (max-width: 760px) {
+          .footer-promo {
+            padding: 18px !important;
+            gap: 10px !important;
+          }
+          .footer-promo-copy h3 {
+            font-size: 19px !important;
+          }
+          .footer-promo-cta {
+            width: 100%;
+            text-align: center;
+            justify-content: center;
+          }
+          .footer-lower {
+            flex-direction: column;
+            align-items: flex-start !important;
+            gap: 10px !important;
+          }
+          .footer-lower > div {
+            flex-wrap: wrap;
+          }
+        }
         @media (max-width: 900px) {
           .footer-grid { grid-template-columns: repeat(2, 1fr) !important; }
         }
