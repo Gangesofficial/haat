@@ -1,332 +1,133 @@
+/* eslint-disable react/prop-types */
 import { Link } from 'react-router-dom'
 import { useReveal } from '../hooks/useReveal'
 import BrandMark from './BrandMark'
+import './Footer.css'
 
 const SHOP_LINKS = [
-  ['All Products',      '/search'],
-  ['Sweets & Mithais',  '/search?category=sweets'],
-  ['Clothing',          '/search?category=clothing'],
-  ['Sarees',            '/search?category=sarees'],
-  ['Spices & Masalas',  '/search?category=spices'],
-  ['Handicrafts',       '/search?category=handicrafts'],
-  ['Gift Collections',  '/search?q=gift'],
+  ['All Products', '/search'],
+  ['Sweets & Mithais', '/search?category=sweets'],
+  ['Clothing', '/search?category=clothing'],
+  ['Sarees', '/search?category=sarees'],
+  ['Spices & Masalas', '/search?category=spices'],
+  ['Handicrafts', '/search?category=handicrafts'],
+  ['Gift Collections', '/search?q=gift'],
   ['Festival Specials', '/search?q=festival'],
 ]
 
 const COMPANY_LINKS = [
-  ['About haat',  '/about'],
-  ['Our Story',   '/about#timeline'],
-  ['Markets',     '/markets'],
+  ['About haat', '/about'],
+  ['Our Story', '/about#timeline'],
+  ['Markets', '/markets'],
   ['Chat with haat', '/chat'],
 ]
 
 const LEGAL_LINKS = [
   ['Privacy Policy', '/privacy'],
-  ['Terms of Use',   '/terms'],
-  ['Contact Us',     'mailto:hello@haat.in'],
+  ['Terms of Use', '/terms'],
+  ['Contact Us', 'mailto:hello@haat.in'],
 ]
 
-function InstagramIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
-      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
-    </svg>
-  )
-}
-function TwitterIcon() {
-  return (
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-    </svg>
-  )
-}
-function YouTubeIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58zM9.75 15.02V8.98L15.5 12z"/>
-    </svg>
-  )
-}
-function LinkedInIcon() {
-  return (
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/>
-      <circle cx="4" cy="4" r="2"/>
-    </svg>
-  )
+function FooterLink({ to, children }) {
+  const external = to.startsWith('mailto:') || to.startsWith('http')
+  if (external) return <a href={to}>{children}</a>
+  return <Link to={to}>{children}</Link>
 }
 
-function SocialBtn({ icon, href, label }) {
+function SocialLink({ href, label, icon }) {
   return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noreferrer"
-      aria-label={label}
-      style={{
-        width: '36px', height: '36px', borderRadius: '50%',
-        background: 'var(--bg-overlay)', border: '1px solid var(--border-subtle)',
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-        color: 'var(--text-secondary)', textDecoration: 'none', flexShrink: 0,
-        transition: 'border-color 150ms ease, color 150ms ease, background 150ms ease',
-      }}
-      onMouseEnter={e => {
-        e.currentTarget.style.borderColor = 'var(--border-default)'
-        e.currentTarget.style.color = 'var(--text-primary)'
-        e.currentTarget.style.background = 'var(--bg-subtle)'
-      }}
-      onMouseLeave={e => {
-        e.currentTarget.style.borderColor = 'var(--border-subtle)'
-        e.currentTarget.style.color = 'var(--text-secondary)'
-        e.currentTarget.style.background = 'var(--bg-overlay)'
-      }}
-    >
+    <a href={href} target="_blank" rel="noreferrer" aria-label={label} className="lux-footer-social-btn">
       {icon}
     </a>
   )
 }
 
-function FooterLink({ to, children }) {
-  const isExternal = to.startsWith('http') || to.startsWith('mailto:')
-  const sharedStyle = { color: 'var(--text-tertiary)', fontSize: '14px', lineHeight: 2.2, display: 'block', transition: 'color 150ms ease', textDecoration: 'none' }
-  const handlers = {
-    onMouseEnter: e => { e.currentTarget.style.color = 'var(--text-secondary)' },
-    onMouseLeave: e => { e.currentTarget.style.color = 'var(--text-tertiary)' },
-  }
-  if (isExternal) {
-    return <a href={to} style={sharedStyle} {...handlers}>{children}</a>
-  }
-  return <Link to={to} style={sharedStyle} {...handlers}>{children}</Link>
-}
-
-function PoweredPill({ label }) {
-  return (
-    <span
-      style={{
-        background: 'var(--bg-overlay)', border: '1px solid var(--border-subtle)',
-        borderRadius: 'var(--radius-full)', padding: '4px 12px',
-        fontSize: '12px', color: 'var(--text-tertiary)',
-        cursor: 'pointer', transition: 'color 150ms ease, border-color 150ms ease',
-        userSelect: 'none',
-      }}
-      onMouseEnter={e => { e.currentTarget.style.color = 'var(--text-primary)'; e.currentTarget.style.borderColor = 'var(--border-default)' }}
-      onMouseLeave={e => { e.currentTarget.style.color = 'var(--text-tertiary)'; e.currentTarget.style.borderColor = 'var(--border-subtle)' }}
-    >
-      {label}
-    </span>
-  )
-}
-
 export default function Footer() {
-  const revealRef = useReveal(0.05)
+  const revealRef = useReveal(0.06)
 
   return (
-    <footer style={{
-      background: 'var(--bg-raised)',
-      borderTop: '1px solid var(--border-faint)',
-      paddingTop: 'var(--space-16)',
-    }}>
-      <div
-        ref={revealRef}
-        style={{ maxWidth: 'var(--container-xl)', margin: '0 auto', padding: '0 var(--space-6)' }}
-      >
-        <div className="footer-promo reveal-child" style={{
-          marginBottom: 'var(--space-12)',
-          borderRadius: 'var(--radius-2xl)',
-          border: '1px solid rgba(249,115,22,0.22)',
-          background: 'radial-gradient(120% 140% at 0% 0%, rgba(249,115,22,0.22) 0%, rgba(249,115,22,0.08) 35%, rgba(17,17,17,0.95) 85%)',
-          padding: '24px 24px',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          flexWrap: 'wrap',
-          gap: '14px',
-        }}>
-          <div className="footer-promo-copy" style={{ maxWidth: '680px' }}>
-            <p className="fx-text-live" style={{ fontSize: '12px', letterSpacing: '0.11em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.58)', marginBottom: '8px' }}>
-              Crafted with people, not just pixels
+    <footer className="lux-footer">
+      <div className="lux-footer-bg" aria-hidden="true" />
+      <div ref={revealRef} className="lux-footer-inner">
+        <section className="lux-footer-hero reveal-child fx-soft-card">
+          <div>
+            <p className="lux-footer-kicker">Built for diaspora families</p>
+            <h3>Home should feel one prompt away.</h3>
+            <p className="lux-footer-copy">
+              A warm, intelligent marketplace that understands culture, occasion, and quality before it shows you results.
             </p>
-            <h3 style={{ fontSize: '24px', lineHeight: 1.25, letterSpacing: '-0.02em', margin: 0, color: '#fff' }}>
-              A warmer digital bazaar for families buying from home, anywhere in the world.
-            </h3>
           </div>
-          <Link
-            className="footer-promo-cta fx-glow-button"
-            to="/chat"
-            style={{
-              padding: '10px 16px',
-              borderRadius: '999px',
-              fontSize: '13px',
-              fontWeight: 700,
-              color: '#fff',
-              background: 'linear-gradient(135deg, var(--brand-saffron) 0%, var(--brand-gold) 100%)',
-              textDecoration: 'none',
-              border: '1px solid rgba(255,255,255,0.18)',
-            }}
-          >
-            Talk to haat AI
+          <Link to="/chat" className="lux-footer-hero-cta fx-glow-button">
+            Start with haat AI
           </Link>
-        </div>
+        </section>
 
-        <div className="reveal-child" style={{
-          border: '1px solid var(--border-subtle)',
-          borderRadius: '14px',
-          padding: '16px',
-          background: 'linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%)',
-          marginBottom: 'var(--space-10)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          flexWrap: 'wrap',
-          gap: '10px',
-        }}>
+        <section className="lux-footer-newsletter reveal-child">
           <div>
-            <p style={{ margin: 0, fontSize: '13px', fontWeight: 600, color: 'var(--text-primary)' }}>
-              Get festival picks and new market drops
-            </p>
-            <p style={{ margin: '4px 0 0', fontSize: '12px', color: 'var(--text-tertiary)' }}>
-              Curated by AI, reviewed by real humans.
-            </p>
+            <h4>Festival drops and new market finds</h4>
+            <p>Curated by AI and reviewed by real people.</p>
           </div>
-          <div style={{ display: 'flex', gap: '8px', minWidth: 'min(420px, 100%)', flex: 1 }}>
-            <input
-              type="email"
-              placeholder="you@example.com"
-              aria-label="Email"
-              style={{
-                flex: 1,
-                minWidth: '150px',
-                background: 'var(--bg-overlay)',
-                border: '1px solid var(--border-subtle)',
-                borderRadius: '999px',
-                color: 'var(--text-primary)',
-                padding: '10px 14px',
-                fontSize: '13px',
-              }}
-            />
-            <button
-              type="button"
-              className="fx-glow-button"
-              style={{
-                border: '1px solid rgba(249,115,22,0.45)',
-                borderRadius: '999px',
-                background: 'linear-gradient(135deg, rgba(249,115,22,0.18) 0%, rgba(217,119,6,0.2) 100%)',
-                color: 'var(--brand-saffron-lt)',
-                fontSize: '13px',
-                fontWeight: 600,
-                padding: '10px 16px',
-                cursor: 'pointer',
-                whiteSpace: 'nowrap',
-              }}
-            >
-              Notify me
-            </button>
+          <div className="lux-footer-newsletter-form">
+            <input type="email" placeholder="you@example.com" aria-label="Email" />
+            <button type="button" className="fx-glow-button">Notify me</button>
           </div>
-        </div>
+        </section>
 
-        {/* ── Upper 4-col grid ───────── */}
-        <div className="footer-grid reveal-child" style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(4, 1fr)',
-          gap: 'var(--space-10)',
-          paddingBottom: 'var(--space-12)',
-        }}>
-          {/* Brand col */}
-          <div>
-            <Link to="/" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px', marginBottom: 'var(--space-4)' }}>
-              <BrandMark size="sm" light />
+        <section className="lux-footer-grid reveal-child">
+          <div className="lux-footer-brand-col">
+            <Link to="/" aria-label="Go to home">
+              <BrandMark size="sm" light={false} />
             </Link>
-            <p style={{ fontSize: '14px', color: 'var(--text-tertiary)', maxWidth: '220px', lineHeight: 1.65, margin: '0 0 var(--space-5)' }}>
-              Connecting the Indian diaspora to authentic local markets.
-            </p>
-            <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
-              <SocialBtn icon={<InstagramIcon />} href="https://instagram.com"  label="Instagram" />
-              <SocialBtn icon={<TwitterIcon />}   href="https://twitter.com"    label="Twitter/X" />
-              <SocialBtn icon={<YouTubeIcon />}   href="https://youtube.com"    label="YouTube" />
-              <SocialBtn icon={<LinkedInIcon />}  href="https://linkedin.com"   label="LinkedIn" />
+            <p>Connecting the Indian diaspora to authentic local markets with intelligent discovery.</p>
+            <div className="lux-footer-social-row">
+              <SocialLink
+                href="https://instagram.com"
+                label="Instagram"
+                icon={<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" /></svg>}
+              />
+              <SocialLink
+                href="https://twitter.com"
+                label="Twitter"
+                icon={<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg>}
+              />
+              <SocialLink
+                href="https://youtube.com"
+                label="YouTube"
+                icon={<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58zM9.75 15.02V8.98L15.5 12z" /></svg>}
+              />
+              <SocialLink
+                href="https://linkedin.com"
+                label="LinkedIn"
+                icon={<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z" /><circle cx="4" cy="4" r="2" /></svg>}
+              />
             </div>
           </div>
 
-          {/* Shop */}
           <div>
-            <h4 style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text-secondary)', letterSpacing: '0.08em', textTransform: 'uppercase', margin: '0 0 var(--space-3)' }}>
-              Shop
-            </h4>
+            <h5>Shop</h5>
             {SHOP_LINKS.map(([label, to]) => <FooterLink key={label} to={to}>{label}</FooterLink>)}
           </div>
 
-          {/* Company */}
           <div>
-            <h4 style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text-secondary)', letterSpacing: '0.08em', textTransform: 'uppercase', margin: '0 0 var(--space-3)' }}>
-              Company
-            </h4>
+            <h5>Company</h5>
             {COMPANY_LINKS.map(([label, to]) => <FooterLink key={label} to={to}>{label}</FooterLink>)}
           </div>
 
-          {/* Legal */}
           <div>
-            <h4 style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text-secondary)', letterSpacing: '0.08em', textTransform: 'uppercase', margin: '0 0 var(--space-3)' }}>
-              Legal
-            </h4>
+            <h5>Legal</h5>
             {LEGAL_LINKS.map(([label, to]) => <FooterLink key={label} to={to}>{label}</FooterLink>)}
           </div>
-        </div>
+        </section>
 
-        {/* ── Lower bar ──────────────── */}
-        <div className="footer-lower reveal-child" style={{
-          borderTop: '1px solid var(--border-faint)',
-          paddingTop: 'var(--space-6)',
-          paddingBottom: 'var(--space-8)',
-          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-          flexWrap: 'wrap', gap: 'var(--space-4)',
-        }}>
-          <span style={{ fontSize: '13px', color: 'var(--text-tertiary)' }}>
-            © 2026 haat. Built for the Indian diaspora worldwide.
-          </span>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
-            <span style={{ fontSize: '12px', color: 'var(--text-tertiary)', marginRight: '4px' }}>Powered by</span>
-            <PoweredPill label="TinyFish" />
-            <PoweredPill label="ElevenLabs" />
-            <PoweredPill label="Claude AI" />
+        <section className="lux-footer-bottom reveal-child">
+          <span>Copyright 2026 haat. Built for the Indian diaspora worldwide.</span>
+          <div className="lux-footer-pills">
+            <span>TinyFish</span>
+            <span>ElevenLabs</span>
+            <span>Claude AI</span>
           </div>
-        </div>
+        </section>
       </div>
-
-      <style>{`
-        @media (max-width: 1100px) {
-          .footer-grid { grid-template-columns: repeat(2, 1fr) !important; }
-        }
-        @media (max-width: 760px) {
-          .footer-promo {
-            padding: 18px !important;
-            gap: 10px !important;
-          }
-          .footer-promo-copy h3 {
-            font-size: 19px !important;
-          }
-          .footer-promo-cta {
-            width: 100%;
-            text-align: center;
-            justify-content: center;
-          }
-          .footer-lower {
-            flex-direction: column;
-            align-items: flex-start !important;
-            gap: 10px !important;
-          }
-          .footer-lower > div {
-            flex-wrap: wrap;
-          }
-        }
-        @media (max-width: 900px) {
-          .footer-grid { grid-template-columns: repeat(2, 1fr) !important; }
-        }
-        @media (max-width: 540px) {
-          .footer-grid { grid-template-columns: 1fr !important; }
-        }
-      `}</style>
     </footer>
   )
 }

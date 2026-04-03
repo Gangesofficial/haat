@@ -1,6 +1,8 @@
+/* eslint-disable react/prop-types */
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useReveal } from '../hooks/useReveal'
+import './AboutPage.css'
 
 const STATS = [
   { value: '100+', label: 'Curated Products', sub: 'across 10 categories' },
@@ -39,19 +41,19 @@ const TEAM = [
 const VALUES = [
   {
     title: 'Authenticity first',
-    desc: 'Every product is sourced from verified sellers. No mass-market replicas, no grey imports - only the real thing.',
+    desc: 'Every product comes from verified sellers. No replicas and no shortcuts.',
   },
   {
     title: 'Support artisans',
-    desc: 'We prioritize small-batch makers and traditional craft clusters. When you buy from haat, you buy from the hands that made it.',
+    desc: 'We prioritize small-batch makers and traditional craft clusters across India.',
   },
   {
     title: 'AI that understands culture',
-    desc: 'Our AI understands context: Kanjivaram versus Banarasi, Kashmiri walnut versus regular walnut, and festival buying needs.',
+    desc: 'Our AI understands context, from Kanjivaram versus Banarasi to festival-driven shopping.',
   },
   {
     title: 'Built for diaspora families',
-    desc: 'We are diaspora ourselves. We built this for the moment you miss home and need someone who understands what that means.',
+    desc: 'We built this for the moments when you miss home and want trusted familiar choices.',
   },
 ]
 
@@ -84,32 +86,11 @@ function fallbackPhoto(seed, width = 220, height = 220) {
 
 function StatCard({ value, label, sub, i }) {
   return (
-    <div
-      className="reveal-child fx-soft-card"
-      style={{
-        background: 'linear-gradient(180deg, rgba(255,255,255,0.03) 0%, var(--bg-raised) 100%)',
-        border: '1px solid var(--border-faint)',
-        borderRadius: 'var(--radius-xl)',
-        padding: 'var(--space-6)',
-        textAlign: 'center',
-        animationDelay: `${i * 60}ms`,
-      }}
-    >
-      <div
-        style={{
-          fontSize: 'clamp(32px, 5vw, 48px)',
-          fontWeight: 800,
-          letterSpacing: '-1.5px',
-          color: 'var(--brand-saffron)',
-          lineHeight: 1,
-          marginBottom: '8px',
-        }}
-      >
-        {value}
-      </div>
-      <div style={{ fontSize: '15px', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '4px' }}>{label}</div>
-      <div style={{ fontSize: '12px', color: 'var(--text-tertiary)' }}>{sub}</div>
-    </div>
+    <article className="about-flow-stat reveal-child fx-soft-card" style={{ transitionDelay: `${i * 70}ms` }}>
+      <p className="about-flow-stat-value">{value}</p>
+      <p className="about-flow-stat-label">{label}</p>
+      <p className="about-flow-stat-sub">{sub}</p>
+    </article>
   )
 }
 
@@ -118,23 +99,11 @@ function TeamCard({ person, i }) {
   const [src, setSrc] = useState(person.avatar)
 
   return (
-    <div
-      className="reveal-child fx-soft-card"
-      style={{
-        background: 'var(--bg-raised)',
-        border: '1px solid var(--border-faint)',
-        borderRadius: 'var(--radius-xl)',
-        padding: 'var(--space-5)',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 'var(--space-3)',
-        animationDelay: `${i * 80}ms`,
-      }}
-    >
+    <article className="about-flow-team-card reveal-child fx-soft-card" style={{ transitionDelay: `${i * 85}ms` }}>
       <img
         src={src}
         alt={person.name}
-        style={{ width: '64px', height: '64px', borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--border-subtle)' }}
+        className="about-flow-team-avatar"
         onError={e => {
           if (e.currentTarget.dataset.fbApplied === '1') return
           e.currentTarget.dataset.fbApplied = '1'
@@ -142,178 +111,155 @@ function TeamCard({ person, i }) {
         }}
       />
       <div>
-        <div style={{ fontSize: '15px', fontWeight: 600, color: 'var(--text-primary)' }}>{person.name}</div>
-        <div style={{ fontSize: '12px', color: 'var(--brand-saffron)', fontWeight: 500 }}>{person.role}</div>
+        <p className="about-flow-team-name">{person.name}</p>
+        <p className="about-flow-team-role">{person.role}</p>
       </div>
-      <p style={{ fontSize: '13px', color: 'var(--text-secondary)', lineHeight: 1.6 }}>{person.bio}</p>
-    </div>
+      <p className="about-flow-team-bio">{person.bio}</p>
+    </article>
   )
 }
 
 export default function AboutPage() {
   const heroRef = useReveal(0.1)
+  const originRef = useReveal(0.12)
   const statsRef = useReveal(0.15)
   const timelineRef = useReveal(0.12)
   const valuesRef = useReveal(0.12)
   const teamRef = useReveal(0.12)
+  const ctaRef = useReveal(0.1)
 
   return (
-    <div style={{ minHeight: '100vh', paddingTop: 'var(--nav-height)', position: 'relative', overflow: 'hidden' }}>
-      <style>{`
-        @keyframes aboutGlow {
-          0%, 100% { opacity: 0.65; transform: scale(1); }
-          50% { opacity: 1; transform: scale(1.06); }
-        }
-        @media (max-width: 640px) {
-          .about-stats-grid  { grid-template-columns: repeat(2, 1fr) !important; }
-          .about-team-grid   { grid-template-columns: 1fr !important; }
-          .about-values-grid { grid-template-columns: 1fr !important; }
-          .about-timeline    { grid-template-columns: 1fr !important; }
-          .about-hero-h1     { font-size: clamp(34px, 10vw, 54px) !important; }
-        }
-        @media (max-width: 900px) {
-          .about-team-grid   { grid-template-columns: repeat(2, 1fr) !important; }
-          .about-values-grid { grid-template-columns: repeat(2, 1fr) !important; }
-          .about-timeline    { grid-template-columns: repeat(2, 1fr) !important; }
-        }
-      `}</style>
+    <div className="about-flow-page">
+      <div className="about-flow-orb about-flow-orb-a" aria-hidden="true" />
+      <div className="about-flow-orb about-flow-orb-b" aria-hidden="true" />
 
-      <div aria-hidden="true" style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
-        <div style={{ position: 'absolute', top: '-180px', left: '-160px', width: '560px', height: '560px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(249,115,22,0.20) 0%, rgba(249,115,22,0) 70%)', filter: 'blur(70px)', animation: 'aboutGlow 8s ease-in-out infinite' }} />
-        <div style={{ position: 'absolute', right: '-140px', top: '220px', width: '460px', height: '460px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(59,130,246,0.10) 0%, rgba(59,130,246,0) 70%)', filter: 'blur(68px)' }} />
+      <svg className="about-flow-ring" viewBox="0 0 420 420" aria-hidden="true">
+        <defs>
+          <path
+            id="about-flow-circle-path"
+            d="M210,210 m-156,0 a156,156 0 1,1 312,0 a156,156 0 1,1 -312,0"
+          />
+        </defs>
+        <text>
+          <textPath href="#about-flow-circle-path">
+            home should feel close - culture should travel - good things should stay familiar -
+          </textPath>
+        </text>
+      </svg>
+
+      <div className="about-flow-ribbon" aria-hidden="true">
+        <span>authentic products • trusted sellers • ai that gets cultural nuance •</span>
       </div>
 
-      <section
-        ref={heroRef}
-        style={{ maxWidth: '820px', margin: '0 auto', padding: 'var(--space-16) var(--space-6) var(--space-12)', textAlign: 'center' }}
-      >
-        <div
-          className="reveal-child"
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '8px',
-            fontSize: 'var(--text-xs)',
-            fontWeight: 600,
-            letterSpacing: '0.1em',
-            textTransform: 'uppercase',
-            color: 'var(--brand-gold-lt)',
-            border: '1px solid rgba(245,158,11,0.3)',
-            borderRadius: 'var(--radius-full)',
-            padding: '4px 16px',
-            marginBottom: 'var(--space-5)',
-            background: 'rgba(245,158,11,0.07)',
-          }}
-        >
-          <span className="fx-text-live">●</span>
-          Our Story
-        </div>
+      <section ref={heroRef} className="about-flow-hero">
+        <p className="about-flow-pill reveal-child">
+          <span className="about-flow-pill-dot" />
+          <span>Story of haat</span>
+        </p>
 
-        <h1 className="about-hero-h1 reveal-child" style={{ fontSize: 'clamp(40px, 7vw, 64px)', fontWeight: 800, letterSpacing: '-2px', lineHeight: 1.05, marginBottom: 'var(--space-6)' }}>
-          Bringing <span className="gradient-text">India</span> to wherever you call home
+        <h1 className="about-flow-title reveal-child">
+          <span className="about-flow-title-soft">Do not browse,</span>{' '}
+          <span className="about-flow-title-strong">speak and discover</span>
         </h1>
 
-        <p className="reveal-child" style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: 1.7, maxWidth: '620px', margin: '0 auto' }}>
-          haat is an AI-powered marketplace for the Indian diaspora - making it effortless to discover, buy, and receive authentic Indian products anywhere in the world.
+        <p className="about-flow-subtitle reveal-child">
+          We built haat so diaspora families can describe what they miss in natural language and get clear,
+          trustworthy product picks that feel like home.
         </p>
+
+        <div className="about-flow-cta reveal-child">
+          <Link to="/chat" className="about-flow-btn about-flow-btn-primary fx-glow-button">
+            Start with haat AI
+          </Link>
+          <Link to="/search" className="about-flow-btn about-flow-btn-secondary fx-glow-button">
+            Explore products
+          </Link>
+        </div>
+
+        <p className="about-flow-availability reveal-child">Serving families across Mac, Windows, iPhone, and Android workflows</p>
       </section>
 
-      <section style={{ maxWidth: 'var(--container-lg)', margin: '0 auto', padding: '0 var(--space-6) var(--space-16)' }}>
-        <div className="about-origin fx-soft-card" style={{
-          background: 'var(--bg-raised)',
-          border: '1px solid var(--border-faint)',
-          borderRadius: 'var(--radius-2xl)',
-          padding: 'clamp(24px, 5vw, 56px)',
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          gap: 'var(--space-10)',
-          alignItems: 'center',
-        }}>
-          <style>{`.about-origin { } @media (max-width: 768px) { .about-origin { grid-template-columns: 1fr !important; } }`}</style>
+      <section ref={originRef} className="about-flow-origin-wrap">
+        <div className="about-flow-origin reveal-child fx-soft-card">
           <div>
-            <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-tertiary)', marginBottom: 'var(--space-4)' }}>
-              Why we built this
-            </div>
-            <h2 style={{ fontSize: 'clamp(22px, 4vw, 32px)', fontWeight: 700, letterSpacing: '-0.5px', lineHeight: 1.3, marginBottom: 'var(--space-4)' }}>
-              Because home is a feeling, <span style={{ color: 'var(--brand-saffron)' }}>not just a place</span>
+            <p className="about-flow-kicker">Why we built this</p>
+            <h2 className="about-flow-section-title">
+              Because home is a feeling, <span>not just a place</span>
             </h2>
-            <p style={{ fontSize: '15px', color: 'var(--text-secondary)', lineHeight: 1.7, marginBottom: 'var(--space-4)' }}>
-              We are 32 million people: Indians living abroad, raising families and building careers across the world while holding close to culture, taste, and tradition.
+            <p className="about-flow-copy">
+              More than 32 million Indians live abroad. Families build new lives while trying to keep language,
+              rituals, food, and craftsmanship close.
             </p>
-            <p style={{ fontSize: '15px', color: 'var(--text-secondary)', lineHeight: 1.7 }}>
-              haat was built so that the basmati you grew up with, the saree your mother wore at every celebration, and the festive sweets your family waits for are always within reach.
+            <p className="about-flow-copy">
+              haat brings that familiarity back with seller-vetted products and an AI guide that understands cultural context.
             </p>
           </div>
-          <div style={{ background: 'rgba(249,115,22,0.05)', border: '1px solid rgba(249,115,22,0.12)', borderRadius: 'var(--radius-xl)', padding: 'var(--space-6)' }}>
-            <blockquote style={{ fontSize: '16px', fontStyle: 'italic', color: 'var(--text-primary)', lineHeight: 1.7, marginBottom: 'var(--space-4)' }}>
-              "I wanted my daughter, born in Toronto, to taste the same Diwali laddoos I grew up with in Jaipur. That should not be hard. With haat, it is not."
+
+          <aside className="about-flow-quote-card">
+            <blockquote>
+              "I wanted my daughter in Toronto to taste the same Diwali laddoos I grew up with in Jaipur.
+              That should not be hard. With haat, now it is not."
             </blockquote>
-            <div style={{ fontSize: '13px', color: 'var(--text-tertiary)' }}>- Arjun Sharma, co-founder</div>
-          </div>
+            <p>Arjun Sharma, co-founder</p>
+          </aside>
         </div>
       </section>
 
-      <section ref={statsRef} style={{ maxWidth: 'var(--container-xl)', margin: '0 auto', padding: '0 var(--space-6) var(--space-16)' }}>
-        <div className="about-stats-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px' }}>
+      <section ref={statsRef} className="about-flow-stats-wrap">
+        <div className="about-flow-stats-grid">
           {STATS.map((s, i) => (
             <StatCard key={s.label} {...s} i={i} />
           ))}
         </div>
       </section>
 
-      <section id="timeline" ref={timelineRef} style={{ background: 'var(--bg-raised)', borderTop: '1px solid var(--border-faint)', borderBottom: '1px solid var(--border-faint)', padding: 'var(--space-16) var(--space-6)' }}>
-        <div style={{ maxWidth: 'var(--container-xl)', margin: '0 auto' }}>
-          <div style={{ marginBottom: 'var(--space-10)' }}>
-            <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-tertiary)', marginBottom: 'var(--space-3)' }}>
-              Our journey
-            </div>
-            <h2 style={{ fontSize: 'clamp(24px, 4vw, 36px)', fontWeight: 700, letterSpacing: '-1px' }}>From frustration to platform</h2>
+      <section id="timeline" ref={timelineRef} className="about-flow-timeline-wrap">
+        <div className="about-flow-section-shell">
+          <div className="about-flow-section-head reveal-child">
+            <p className="about-flow-kicker">Our journey</p>
+            <h2 className="about-flow-section-title">From frustration to platform</h2>
           </div>
 
-          <div className="about-timeline" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px' }}>
+          <div className="about-flow-timeline-grid">
             {TIMELINE.map((t, i) => (
-              <div key={t.year} className="reveal-child fx-soft-card" style={{ display: 'flex', flexDirection: 'column', gap: '12px', background: 'rgba(255,255,255,0.02)', border: '1px solid var(--border-faint)', borderRadius: '12px', padding: '14px', animationDelay: `${i * 70}ms` }}>
-                <div style={{ fontSize: 'clamp(28px, 4vw, 40px)', fontWeight: 800, letterSpacing: '-1px', color: 'var(--brand-saffron)', lineHeight: 1 }}>{t.year}</div>
-                <div style={{ width: '24px', height: '2px', background: 'rgba(249,115,22,0.4)' }} />
-                <div style={{ fontSize: '15px', fontWeight: 600, color: 'var(--text-primary)' }}>{t.title}</div>
-                <p style={{ fontSize: '13px', color: 'var(--text-secondary)', lineHeight: 1.6 }}>{t.desc}</p>
-              </div>
+              <article key={t.year} className="about-flow-timeline-card reveal-child fx-soft-card" style={{ transitionDelay: `${i * 75}ms` }}>
+                <p className="about-flow-year">{t.year}</p>
+                <div className="about-flow-year-rule" />
+                <p className="about-flow-timeline-title">{t.title}</p>
+                <p className="about-flow-timeline-desc">{t.desc}</p>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section ref={valuesRef} style={{ maxWidth: 'var(--container-xl)', margin: '0 auto', padding: 'var(--space-16) var(--space-6)' }}>
-        <div style={{ marginBottom: 'var(--space-10)' }}>
-          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-tertiary)', marginBottom: 'var(--space-3)' }}>
-            What we believe
+      <section ref={valuesRef} className="about-flow-values-wrap">
+        <div className="about-flow-section-shell">
+          <div className="about-flow-section-head reveal-child">
+            <p className="about-flow-kicker">What we believe</p>
+            <h2 className="about-flow-section-title">Our principles</h2>
           </div>
-          <h2 style={{ fontSize: 'clamp(24px, 4vw, 36px)', fontWeight: 700, letterSpacing: '-1px' }}>Our principles</h2>
-        </div>
 
-        <div className="about-values-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px' }}>
-          {VALUES.map((v, i) => (
-            <div key={v.title} className="reveal-child fx-soft-card" style={{ background: 'var(--bg-raised)', border: '1px solid var(--border-faint)', borderRadius: 'var(--radius-xl)', padding: 'var(--space-5)', display: 'flex', flexDirection: 'column', gap: 'var(--space-3)', animationDelay: `${i * 60}ms` }}>
-              <div style={{ fontSize: '22px', width: '44px', height: '44px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(249,115,22,0.08)', border: '1px solid rgba(249,115,22,0.15)', borderRadius: 'var(--radius-lg)', color: 'var(--brand-saffron)' }}>
-                {i + 1}
-              </div>
-              <div style={{ fontSize: '15px', fontWeight: 600, color: 'var(--text-primary)' }}>{v.title}</div>
-              <p style={{ fontSize: '13px', color: 'var(--text-secondary)', lineHeight: 1.6 }}>{v.desc}</p>
-            </div>
-          ))}
+          <div className="about-flow-values-grid">
+            {VALUES.map((v, i) => (
+              <article key={v.title} className="about-flow-value-card reveal-child fx-soft-card" style={{ transitionDelay: `${i * 70}ms` }}>
+                <span className="about-flow-value-index">{i + 1}</span>
+                <p className="about-flow-value-title">{v.title}</p>
+                <p className="about-flow-value-desc">{v.desc}</p>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
-      <section ref={teamRef} style={{ background: 'var(--bg-raised)', borderTop: '1px solid var(--border-faint)', padding: 'var(--space-16) var(--space-6)' }}>
-        <div style={{ maxWidth: 'var(--container-xl)', margin: '0 auto' }}>
-          <div style={{ marginBottom: 'var(--space-10)' }}>
-            <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-tertiary)', marginBottom: 'var(--space-3)' }}>
-              The people
-            </div>
-            <h2 style={{ fontSize: 'clamp(24px, 4vw, 36px)', fontWeight: 700, letterSpacing: '-1px' }}>Built by diaspora, for diaspora</h2>
+      <section ref={teamRef} className="about-flow-team-wrap">
+        <div className="about-flow-section-shell">
+          <div className="about-flow-section-head reveal-child">
+            <p className="about-flow-kicker">The people</p>
+            <h2 className="about-flow-section-title">Built by diaspora, for diaspora</h2>
           </div>
 
-          <div className="about-team-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px' }}>
+          <div className="about-flow-team-grid">
             {TEAM.map((p, i) => (
               <TeamCard key={p.name} person={p} i={i} />
             ))}
@@ -321,38 +267,16 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section style={{ textAlign: 'center', padding: 'var(--space-20) var(--space-6)', maxWidth: '700px', margin: '0 auto' }}>
-        <h2 style={{ fontSize: 'clamp(26px, 5vw, 40px)', fontWeight: 800, letterSpacing: '-1.5px', marginBottom: 'var(--space-4)', lineHeight: 1.15 }}>
-          Ready to find something from home?
-        </h2>
-        <p style={{ fontSize: '16px', color: 'var(--text-secondary)', marginBottom: 'var(--space-8)', lineHeight: 1.6 }}>
-          Tell haat AI what you are looking for. It understands the nuance.
-        </p>
-        <Link
-          to="/chat"
-          className="fx-glow-button"
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '8px',
-            background: 'var(--brand-saffron)',
-            color: '#fff',
-            borderRadius: 'var(--radius-full)',
-            padding: '14px 32px',
-            fontSize: '15px',
-            fontWeight: 700,
-            textDecoration: 'none',
-            transition: 'opacity 150ms ease',
-          }}
-          onMouseEnter={e => {
-            e.currentTarget.style.opacity = '0.88'
-          }}
-          onMouseLeave={e => {
-            e.currentTarget.style.opacity = '1'
-          }}
-        >
-          Start chatting with haat
-        </Link>
+      <section ref={ctaRef} className="about-flow-cta-wrap">
+        <div className="about-flow-cta-panel reveal-child fx-soft-card">
+          <h2>Ready to find something from home?</h2>
+          <p>
+            Tell haat AI what you need in your own words. It handles nuance, intent, and cultural specifics.
+          </p>
+          <Link to="/chat" className="about-flow-btn about-flow-btn-primary fx-glow-button">
+            Start chatting with haat
+          </Link>
+        </div>
       </section>
     </div>
   )

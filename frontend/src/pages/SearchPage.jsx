@@ -697,7 +697,7 @@ export default function SearchPage() {
         padding:     'var(--space-6)',
         display:     'flex',
         gap:         'var(--space-6)',
-        minHeight:   'calc(100vh - var(--nav-height) - 60px)',
+        minHeight:   'auto',
         alignItems:  'flex-start',
       }}>
 

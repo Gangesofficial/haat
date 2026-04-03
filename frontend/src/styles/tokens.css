@@ -12,6 +12,7 @@
   --bg-overlay:  #1A1E29;
   --bg-subtle:   #232939;
   --bg-inverse:  #FAFAFA;
+  --bg-card:     #1A1E29;
 
   /* ─── BORDERS (barely there — signals luxury) ─── */
   --border-faint:   rgba(255,255,255,0.08);
@@ -121,6 +122,8 @@
   --container-xl:  1280px;
   --container-2xl: 1440px;
   --nav-height:    60px;
+  --mx: 50%;
+  --my: 12%;
 }
 
 /* ─── LIGHT THEME OVERRIDES ─── */
@@ -318,13 +321,16 @@ input, textarea, select { font-family: inherit; }
 .reveal-child {
   opacity: 0;
   transform: translateY(24px);
+  filter: blur(6px);
   transition:
     opacity  500ms var(--ease-out),
-    transform 500ms var(--ease-out);
+    transform 500ms var(--ease-out),
+    filter 500ms var(--ease-out);
 }
 .reveal-child.visible {
   opacity: 1;
   transform: translateY(0);
+  filter: blur(0);
 }
 
 /* ────────────────────────────────────────────────────────
@@ -456,11 +462,8 @@ select:focus {
 .btn-secondary:active { transform: scale(0.98); }
 
 /* ────────────────────────────────────────────────────────
-   bg-card alias
-   ──────────────────────────────────────────────────────── */
-:root {
-  --bg-card: var(--bg-overlay);
-}
+  bg-card alias
+  ──────────────────────────────────────────────────────── */
 
 /* ────────────────────────────────────────────────────────
    AMBIENT GRAPHICS LAYER
@@ -471,12 +474,18 @@ select:focus {
   100% { transform: translate3d(0, 0, 0) scale(1); }
 }
 
+@keyframes ambientSweep {
+  0% { transform: rotate(0deg) scale(1); }
+  100% { transform: rotate(360deg) scale(1.02); }
+}
+
 .ambient-canvas {
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
   background:
+    radial-gradient(30% 24% at var(--mx) var(--my), rgba(255,255,255,0.10) 0%, rgba(255,255,255,0) 72%),
     radial-gradient(45% 35% at 10% 0%, rgba(249,115,22,0.16) 0%, rgba(249,115,22,0) 70%),
     radial-gradient(35% 30% at 88% 8%, rgba(251,191,36,0.12) 0%, rgba(251,191,36,0) 70%),
     radial-gradient(40% 42% at 50% 100%, rgba(59,130,246,0.08) 0%, rgba(59,130,246,0) 72%);
@@ -493,6 +502,16 @@ select:focus {
   opacity: 0.38;
 }
 
+.ambient-canvas::after {
+  content: '';
+  position: absolute;
+  inset: -20%;
+  background: conic-gradient(from 0deg at 50% 50%, rgba(255,255,255,0.06), rgba(249,115,22,0.0) 32%, rgba(59,130,246,0.12) 56%, rgba(255,255,255,0.0) 82%, rgba(255,255,255,0.06));
+  opacity: 0.32;
+  mix-blend-mode: screen;
+  animation: ambientSweep 46s linear infinite;
+}
+
 @media (max-width: 768px) {
   .ambient-canvas {
     background:
@@ -504,6 +523,10 @@ select:focus {
 
 @media (prefers-reduced-motion: reduce) {
   .ambient-canvas {
+    animation: none;
+  }
+
+  .ambient-canvas::after {
     animation: none;
   }
 }
@@ -551,12 +574,13 @@ select:focus {
 }
 
 .fx-soft-card {
-  transition: transform 220ms var(--ease-default), box-shadow 220ms var(--ease-default), border-color 220ms var(--ease-default);
+  transition: transform 220ms var(--ease-default), box-shadow 220ms var(--ease-default), border-color 220ms var(--ease-default), filter 220ms var(--ease-default);
 }
 
 .fx-soft-card:hover {
-  transform: translateY(-2px);
+  transform: translateY(-4px);
   box-shadow: var(--shadow-md);
+  filter: saturate(1.05);
 }
 
 .fx-human-float {
